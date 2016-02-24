@@ -61,7 +61,7 @@
 
         // don't repeat across y-axis (vertically)
         if (y < 0 || y >= tileRange) {
-          return null;
+          y = (y % tileRange + tileRange) % tileRange;
         }
 
         // repeat across x-axis
