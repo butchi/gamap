@@ -15,6 +15,7 @@
   </head>
   <body>
     <div id="map"></div>
+    <script src="js/data/map_info.js"></script>
     <script>
 
       function initMap() {
@@ -47,6 +48,39 @@
 
         map.mapTypes.set('ff4', ff4MapType);
         map.setMapTypeId('ff4');
+
+        var markerArr = [];
+        var infoWindowArr = [];
+
+        Object.keys(spotLi).forEach(function(key) {
+          var marker;
+          var infoWindow;
+          var spot = spotLi[key];
+
+          marker = new google.maps.Marker({
+            position: {lat: spot.lat, lng: spot.lng},
+            map: map,
+            title: spot.title,
+          });
+
+          markerArr.push(marker);
+
+          infoWindow = new google.maps.InfoWindow({
+            content: spot.title,
+          });
+
+          infoWindowArr.push(infoWindow);
+
+          infoWindowArr.forEach(function(iw, i) {
+            google.maps.event.addListener(markerArr[i], 'click', function(evt) {
+              iw.open(map, markerArr[i]);
+            })
+          });
+        });
+
+        map.addListener('click', function(evt) {
+          console.log(evt.latLng.lat(), evt.latLng.lng());
+        });
       }
 
       // Normalizes the coords that tiles repeat across the x axis (horizontally)
