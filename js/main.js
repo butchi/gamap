@@ -17,7 +17,7 @@ function initMap() {
         var bound = Math.pow(2, zoom);
         var id = normalizedCoord.x + normalizedCoord.y * bound + 1;
         var idStr = ('0000' + id).slice(-2);
-        return '/img/ff4/' + zoom + '/ff4_' + idStr + '.png';
+        return 'img/ff4/' + zoom + '/ff4_' + idStr + '.png';
     },
     tileSize: new google.maps.Size(256, 256),
     maxZoom: 3,
