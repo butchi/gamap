@@ -4,30 +4,52 @@ function initMap() {
     zoom: 1,
     streetViewControl: false,
     mapTypeControlOptions: {
-      mapTypeIds: ['ff4']
+      mapTypeIds: ['ff4_dot', 'ff4_paint']
     }
   });
 
-  var ff4MapType = new google.maps.ImageMapType({
+  var ff4MapTypeDot = new google.maps.ImageMapType({
     getTileUrl: function(coord, zoom) {
-        var normalizedCoord = getNormalizedCoord(coord, zoom);
-        if (!normalizedCoord) {
-          return null;
-        }
-        var bound = Math.pow(2, zoom);
-        var id = normalizedCoord.x + normalizedCoord.y * bound + 1;
-        var idStr = ('0000' + id).slice(-2);
-        return 'img/ff4/' + zoom + '/ff4_' + idStr + '.png';
+      var type = 'dot';
+      var normalizedCoord = getNormalizedCoord(coord, zoom);
+      if (!normalizedCoord) {
+        return null;
+      }
+      var bound = Math.pow(2, zoom);
+      var id = normalizedCoord.x + normalizedCoord.y * bound + 1;
+      var idStr = ('0000' + id).slice(-2);
+      return 'img/ff4/' + type + '/' + zoom + '/ff4_' + idStr + '.png';
     },
     tileSize: new google.maps.Size(256, 256),
     maxZoom: 3,
     minZoom: 0,
     radius: 1738000,
-    name: 'Final Fantasy IV'
+    name: 'Final Fantasy IV 0'
   });
 
-  map.mapTypes.set('ff4', ff4MapType);
-  map.setMapTypeId('ff4');
+  var ff4MapTypePaint = new google.maps.ImageMapType({
+    getTileUrl: function(coord, zoom) {
+      var type = 'paint';
+      var normalizedCoord = getNormalizedCoord(coord, zoom);
+      if (!normalizedCoord) {
+        return null;
+      }
+      var bound = Math.pow(2, zoom);
+      var id = normalizedCoord.x + normalizedCoord.y * bound + 1;
+      var idStr = ('0000' + id).slice(-2);
+      return 'img/ff4/' + type + '/' + zoom + '/ff4_' + idStr + '.png';
+    },
+    tileSize: new google.maps.Size(256, 256),
+    maxZoom: 3,
+    minZoom: 0,
+    radius: 1738000,
+    name: 'Final Fantasy IV 1'
+  });
+
+  map.mapTypes.set('ff4_dot', ff4MapTypeDot);
+  map.setMapTypeId('ff4_dot');
+  map.mapTypes.set('ff4_paint', ff4MapTypePaint);
+  map.setMapTypeId('ff4_paint');
 
   var markerArr = [];
   var infoWindowArr = [];
